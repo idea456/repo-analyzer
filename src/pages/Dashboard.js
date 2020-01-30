@@ -1,19 +1,119 @@
 import React from "react";
 import "../styles/Dashboard.css";
-
 import CardPiece from "../components/CardPiece";
-
 import ApolloClient, { gql } from "apollo-boost";
-import { CardDeck, Card, Spinner } from "react-bootstrap";
+import { CardDeck, Spinner } from "react-bootstrap";
+
+import { connect } from "react-redux";
+import {
+  changeLoading,
+  setDashboard
+} from "../store/action-creators/dashboard";
+
+// the apollo client
+const client = new ApolloClient({
+  uri: "https://api.github.com/graphql",
+  request: async operation => {
+    operation.setContext({
+      headers: {
+        authorization: `token b2e17545bf50669c79b9b88be535eecd94087eaa`
+      }
+    });
+  }
+});
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      owner: this.props.owner,
+      name: this.props.name
+    };
+
+    this.data = "";
+    const {
+      commits,
+      branches,
+      releases,
+      forks,
+      pull_requests,
+      watch,
+      stars,
+      issues
+    } = this.props;
   }
 
-  componentDidMount() {
-    // if (this.props.owner !== "" && this.props.name !== "") {
-    // }
+  componentDidUpdate() {
+    this.data = gql`
+      {
+        user: search(type: USER, query: "type:user") {
+          userCount
+        }
+
+        repository(owner: "${this.props.owner}", name: "${this.props.name}") {
+        object(expression:"master") {
+            ... on Commit {
+                history {
+                    totalCount
+                }
+            }
+        }
+          refs(first: 0, refPrefix: "refs/heads/") {
+            totalCount
+          }
+
+          releases(first: 100) {
+            totalCount
+          }
+
+          pullRequests(states: OPEN) {
+            totalCount
+          }
+
+          watchers {
+            totalCount
+          }
+
+          stargazers {
+            totalCount
+          }
+
+          object(expression: "master") {
+            ... on Commit {
+              history {
+                totalCount
+              }
+            }
+          }
+
+          issues(states: OPEN) {
+            totalCount
+          }
+
+          forkCount
+        }
+      }
+    `;
+    // if user has entered and clicked on the search button
+    if (this.props.owner !== "owner" && this.props.name !== "name") {
+      client
+        .query({
+          query: this.data
+        })
+        .then(result =>
+          this.props.setDashboard({
+            loading: false,
+            commits: result.data.repository.object.history.totalCount,
+            branches: result.data.repository.refs.totalCount,
+            releases: result.data.repository.releases.totalCount,
+            forks: result.data.repository.forkCount,
+            pull_requests: result.data.repository.pullRequests.totalCount,
+            watch: result.data.repository.watchers.totalCount,
+            stars: result.data.repository.stargazers.totalCount,
+            issues: result.data.repository.issues.totalCount
+          })
+        );
+    }
   }
 
   render() {
@@ -37,17 +137,20 @@ class Dashboard extends React.Component {
         {!this.props.loading && (
           <div>
             <CardDeck style={{ width: "100%" }}>
-              <CardPiece title="Commits" text="123" />
-              <CardPiece title="Branches" text="123" />
-              <CardPiece title="Releases" text="123" />
-              <CardPiece title="Forks" text="123" />
+              <CardPiece title="Commits" text={this.props.commits} />
+              <CardPiece title="Branches" text={this.props.branches} />
+              <CardPiece title="Releases" text={this.props.releases} />
+              <CardPiece title="Forks" text={this.props.forks} />
             </CardDeck>
 
             <CardDeck style={{ width: "100%" }}>
-              <CardPiece title="Pull requests" text="123" />
-              <CardPiece title="Watch" text="123" />
-              <CardPiece title="Stars" text="123" />
-              <CardPiece title="Issues" text="123" />
+              <CardPiece
+                title="Pull requests"
+                text={this.props.pull_requests}
+              />
+              <CardPiece title="Watch" text={this.props.watch} />
+              <CardPiece title="Stars" text={this.props.stars} />
+              <CardPiece title="Issues" text={this.props.issues} />
             </CardDeck>
           </div>
         )}
@@ -56,4 +159,26 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    loading: state.loading,
+    commits: state.commits,
+    branches: state.branches,
+    releases: state.releases,
+    forks: state.forks,
+    pull_requests: state.pull_requests,
+    watch: state.watch,
+    stars: state.stars,
+    issues: state.issues
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    changeLoading: () => dispatch(changeLoading()),
+    setDashboard: payload => dispatch(setDashboard(payload))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
