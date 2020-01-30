@@ -16,7 +16,7 @@ const client = new ApolloClient({
   request: async operation => {
     operation.setContext({
       headers: {
-        authorization: `token b2e17545bf50669c79b9b88be535eecd94087eaa`
+        authorization: `token 7517703b0d0fc218bedde222f2f3a24ee60b4d7b`
       }
     });
   }
@@ -102,7 +102,6 @@ class Dashboard extends React.Component {
         })
         .then(result =>
           this.props.setDashboard({
-            loading: false,
             commits: result.data.repository.object.history.totalCount,
             branches: result.data.repository.refs.totalCount,
             releases: result.data.repository.releases.totalCount,
@@ -129,9 +128,7 @@ class Dashboard extends React.Component {
               flexDirection: "column"
             }}
           >
-            <Spinner animation="border" />
-            <br />
-            <h3>Loading data...</h3>
+            <h3>Click the button 'Search for a repo' to begin searching!</h3>
           </div>
         )}
         {!this.props.loading && (
