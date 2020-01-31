@@ -1,6 +1,8 @@
 import React from "react";
 import "../styles/Dashboard.css";
 import CardPiece from "../components/CardPiece";
+import CardPieChart from "../components/CardPieChart";
+import CardLineChart from "../components/CardLineChart";
 import { CardDeck, Spinner } from "react-bootstrap";
 
 import { connect } from "react-redux";
@@ -66,6 +68,11 @@ class Dashboard extends React.Component {
               <CardPiece title="Watch" text={this.props.watch} />
               <CardPiece title="Stars" text={this.props.stars} />
               <CardPiece title="Issues" text={this.props.issues} />
+            </CardDeck>
+
+            <CardDeck style={{ width: "100%" }}>
+              <CardPieChart />
+              <CardLineChart />
             </CardDeck>
           </div>
         )}

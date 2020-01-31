@@ -1,12 +1,19 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link,
+  withRouter
+} from "react-router-dom";
 import { Navbar, Form, Button, Modal, Image } from "react-bootstrap";
 import axios from "axios";
 import { connect } from "react-redux";
 
 import Dashboard from "./pages/Dashboard";
 import Main from "./pages/Main";
+import Error from "./pages/Error";
 
 import {
   changeSearched,
@@ -34,14 +41,21 @@ class App extends React.Component {
   async submitSearch() {
     const target = `https://api.github.com/users/${this.textOwner.current.value}/repos`;
     const data = await axios.get(target);
-    this.setState({
-      owner: this.textOwner.current.value,
-      name: this.textName.current.value,
-      image: data.data[0].owner.avatar_url,
-      showModal: false,
-      loading: false
-    });
-    this.props.changeSearched();
+    try {
+      this.setState({
+        owner: this.textOwner.current.value,
+        name: this.textName.current.value,
+        image: data.data[0].owner.avatar_url,
+        showModal: false,
+        loading: false
+      });
+      this.props.changeSearched();
+      this.props.history.push("/dashboard");
+      this.setState({ showModal: false });
+    } catch {
+      this.setState({ showModal: false });
+      this.props.history.push("/error");
+    }
   }
 
   handleCloseModal() {
@@ -53,12 +67,12 @@ class App extends React.Component {
   }
 
   componentDidCatch() {
-    alert("error!");
+    this.props.history.push("/error");
   }
 
   render() {
     return (
-      <Router>
+      <>
         <Modal show={this.state.showModal} onHide={this.handleCloseModal}>
           <Modal.Header closeButton>
             <Modal.Title>Search for a repo</Modal.Title>
@@ -164,6 +178,9 @@ class App extends React.Component {
 
           <div className="main-content">
             <Switch>
+              <Route exact path="/error">
+                <Error />
+              </Route>
               <Route exact path="/">
                 <Main />
               </Route>
@@ -192,7 +209,7 @@ class App extends React.Component {
             </Switch>
           </div>
         </div>
-      </Router>
+      </>
     );
   }
 }
@@ -210,6 +227,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
 
 // export default App;

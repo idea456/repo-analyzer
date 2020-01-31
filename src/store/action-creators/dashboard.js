@@ -19,7 +19,7 @@ const client = new ApolloClient({
   request: async operation => {
     operation.setContext({
       headers: {
-        authorization: `token 2dbefd40aa5bbfa16778fa85c1641a8b2ba47142`
+        authorization: `token 25a01f941c7b06943b6165fa05b8aa1177782cdc`
       }
     });
   }
