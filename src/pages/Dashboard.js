@@ -1,26 +1,15 @@
 import React from "react";
 import "../styles/Dashboard.css";
 import CardPiece from "../components/CardPiece";
-import ApolloClient, { gql } from "apollo-boost";
 import { CardDeck, Spinner } from "react-bootstrap";
 
 import { connect } from "react-redux";
+import { withRouter, Redirect } from "react-router-dom";
 import {
   changeLoading,
-  setDashboard
+  setDashboard,
+  getDashboardData
 } from "../store/action-creators/dashboard";
-
-// the apollo client
-const client = new ApolloClient({
-  uri: "https://api.github.com/graphql",
-  request: async operation => {
-    operation.setContext({
-      headers: {
-        authorization: `token 7517703b0d0fc218bedde222f2f3a24ee60b4d7b`
-      }
-    });
-  }
-});
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -31,87 +20,14 @@ class Dashboard extends React.Component {
     };
 
     this.data = "";
-    const {
-      commits,
-      branches,
-      releases,
-      forks,
-      pull_requests,
-      watch,
-      stars,
-      issues
-    } = this.props;
   }
 
-  componentDidUpdate() {
-    this.data = gql`
-      {
-        user: search(type: USER, query: "type:user") {
-          userCount
-        }
-
-        repository(owner: "${this.props.owner}", name: "${this.props.name}") {
-        object(expression:"master") {
-            ... on Commit {
-                history {
-                    totalCount
-                }
-            }
-        }
-          refs(first: 0, refPrefix: "refs/heads/") {
-            totalCount
-          }
-
-          releases(first: 100) {
-            totalCount
-          }
-
-          pullRequests(states: OPEN) {
-            totalCount
-          }
-
-          watchers {
-            totalCount
-          }
-
-          stargazers {
-            totalCount
-          }
-
-          object(expression: "master") {
-            ... on Commit {
-              history {
-                totalCount
-              }
-            }
-          }
-
-          issues(states: OPEN) {
-            totalCount
-          }
-
-          forkCount
-        }
-      }
-    `;
-    // if user has entered and clicked on the search button
-    if (this.props.owner !== "owner" && this.props.name !== "name") {
-      client
-        .query({
-          query: this.data
-        })
-        .then(result =>
-          this.props.setDashboard({
-            commits: result.data.repository.object.history.totalCount,
-            branches: result.data.repository.refs.totalCount,
-            releases: result.data.repository.releases.totalCount,
-            forks: result.data.repository.forkCount,
-            pull_requests: result.data.repository.pullRequests.totalCount,
-            watch: result.data.repository.watchers.totalCount,
-            stars: result.data.repository.stargazers.totalCount,
-            issues: result.data.repository.issues.totalCount
-          })
-        );
+  componentDidMount() {
+    if (!this.props.searched) {
+      this.props.history.push("/main");
+    } else {
+      // query the data
+      this.props.getDashboardData(this.props.owner, this.props.name);
     }
   }
 
@@ -128,7 +44,9 @@ class Dashboard extends React.Component {
               flexDirection: "column"
             }}
           >
-            <h3>Click the button 'Search for a repo' to begin searching!</h3>
+            <Spinner animation="border" variant="info" />
+            <br />
+            <h3>Loading the data...</h3>
           </div>
         )}
         {!this.props.loading && (
@@ -157,25 +75,28 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
-    loading: state.loading,
-    commits: state.commits,
-    branches: state.branches,
-    releases: state.releases,
-    forks: state.forks,
-    pull_requests: state.pull_requests,
-    watch: state.watch,
-    stars: state.stars,
-    issues: state.issues
+    loading: state.dashboard.loading,
+    commits: state.dashboard.commits,
+    branches: state.dashboard.branches,
+    releases: state.dashboard.releases,
+    forks: state.dashboard.forks,
+    pull_requests: state.dashboard.pull_requests,
+    watch: state.dashboard.watch,
+    stars: state.dashboard.stars,
+    issues: state.dashboard.issues,
+    searched: state.global.searched
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     changeLoading: () => dispatch(changeLoading()),
-    setDashboard: payload => dispatch(setDashboard(payload))
+    setDashboard: payload => dispatch(setDashboard(payload)),
+    getDashboardData: (owner, name) => dispatch(getDashboardData(owner, name))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+);
