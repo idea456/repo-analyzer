@@ -1,12 +1,6 @@
 import React from "react";
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link,
-  withRouter
-} from "react-router-dom";
+import { Route, Switch, Link, withRouter } from "react-router-dom";
 import { Navbar, Form, Button, Modal, Image } from "react-bootstrap";
 import axios from "axios";
 import { connect } from "react-redux";
@@ -15,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Main from "./pages/Main";
 import Error from "./pages/Error";
 
+import { changeLoading } from "./store/action-creators/dashboard";
 import {
   changeSearched,
   errorEncountered
@@ -27,8 +22,7 @@ class App extends React.Component {
       owner: "owner",
       name: "name",
       image: "",
-      showModal: false,
-      loading: false
+      showModal: false
     };
     this.textOwner = React.createRef();
     this.textName = React.createRef();
@@ -42,17 +36,18 @@ class App extends React.Component {
     const target = `https://api.github.com/users/${this.textOwner.current.value}/repos`;
     const data = await axios.get(target);
     try {
+      // this.setState({ showModal: false });
       this.setState({
         owner: this.textOwner.current.value,
         name: this.textName.current.value,
         image: data.data[0].owner.avatar_url,
-        showModal: false,
-        loading: false
+        showModal: false
       });
       this.props.changeSearched();
+      this.props.history.push("/main");
       this.props.history.push("/dashboard");
-      this.setState({ showModal: false });
     } catch {
+      // redirect to error page if an error occurs when setting the image
       this.setState({ showModal: false });
       this.props.history.push("/error");
     }
@@ -222,6 +217,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    changeLoading: payload => dispatch(changeLoading()),
     changeSearched: () => dispatch(changeSearched()),
     errorEncountered: () => dispatch(errorEncountered())
   };

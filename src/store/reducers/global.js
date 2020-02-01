@@ -9,7 +9,7 @@ function globalReducer(state = initialState, action) {
   switch (action.type) {
     case CHANGE_SEARCHED:
       return {
-        searched: !state.searched
+        searched: true
       };
     case ERROR_ENCOUNTERED:
       return {

@@ -6,7 +6,7 @@ import CardLineChart from "../components/CardLineChart";
 import { CardDeck, Spinner } from "react-bootstrap";
 
 import { connect } from "react-redux";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import {
   changeLoading,
   setDashboard,
@@ -29,6 +29,7 @@ class Dashboard extends React.Component {
       this.props.history.push("/main");
     } else {
       // query the data
+      this.props.changeLoading(true);
       this.props.getDashboardData(this.props.owner, this.props.name);
     }
   }
@@ -71,7 +72,13 @@ class Dashboard extends React.Component {
             </CardDeck>
 
             <CardDeck style={{ width: "100%" }}>
-              <CardPieChart />
+              <CardPieChart
+                data={this.props.popularity_data}
+                labels={this.props.popularity_labels}
+                legend={false}
+                name={this.props.name}
+                title="Popularity by stars compared to other repositories"
+              />
               <CardLineChart />
             </CardDeck>
           </div>
@@ -82,6 +89,7 @@ class Dashboard extends React.Component {
 }
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     loading: state.dashboard.loading,
     commits: state.dashboard.commits,
@@ -92,13 +100,15 @@ const mapStateToProps = state => {
     watch: state.dashboard.watch,
     stars: state.dashboard.stars,
     issues: state.dashboard.issues,
-    searched: state.global.searched
+    searched: state.global.searched,
+    popularity_data: state.dashboard.popularity_data,
+    popularity_labels: state.dashboard.popularity_labels
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    changeLoading: () => dispatch(changeLoading()),
+    changeLoading: payload => dispatch(changeLoading(payload)),
     setDashboard: payload => dispatch(setDashboard(payload)),
     getDashboardData: (owner, name) => dispatch(getDashboardData(owner, name))
   };

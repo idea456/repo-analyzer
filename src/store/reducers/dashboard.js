@@ -17,7 +17,7 @@ function dashboardReducer(state = initialState, action) {
     case CHANGE_LOADING:
       return {
         ...state,
-        loading: !state.loading
+        loading: action.payload
       };
     case SET_DASHBOARD:
       return {
@@ -29,7 +29,9 @@ function dashboardReducer(state = initialState, action) {
         pull_requests: action.payload.pull_requests,
         watch: action.payload.watch,
         stars: action.payload.stars,
-        issues: action.payload.issues
+        issues: action.payload.issues,
+        popularity_data: action.payload.popularity_data,
+        popularity_labels: action.payload.popularity_labels
       };
     default:
       return state;
