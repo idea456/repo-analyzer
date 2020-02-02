@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/Dashboard.css";
 import CardPiece from "../components/CardPiece";
 import CardPieChart from "../components/CardPieChart";
-import CardLineChart from "../components/CardLineChart";
+import CardHorizontalBarChart from "../components/CardHorizontalBarChart";
 import { CardDeck, Spinner } from "react-bootstrap";
 
 import { connect } from "react-redux";
@@ -79,7 +79,11 @@ class Dashboard extends React.Component {
                 name={this.props.name}
                 title="Popularity by stars compared to other repositories"
               />
-              <CardLineChart />
+              <CardHorizontalBarChart
+                title="Language frequency"
+                labels={this.props.language_labels}
+                data={this.props.language_count}
+              />
             </CardDeck>
           </div>
         )}
@@ -102,7 +106,9 @@ const mapStateToProps = state => {
     issues: state.dashboard.issues,
     searched: state.global.searched,
     popularity_data: state.dashboard.popularity_data,
-    popularity_labels: state.dashboard.popularity_labels
+    popularity_labels: state.dashboard.popularity_labels,
+    language_labels: state.dashboard.language_labels,
+    language_count: state.dashboard.language_count
   };
 };
 

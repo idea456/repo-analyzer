@@ -21,7 +21,7 @@ const client = new ApolloClient({
   request: async operation => {
     operation.setContext({
       headers: {
-        authorization: `token 195d8eb9a0b9a73bea7653e1525b654ef49eab14`
+        authorization: `token d19221a9ab540d9301a1c9e5592033b57ee7f2c3`
       }
     });
   }
@@ -86,24 +86,42 @@ export function getDashboardData(owner, name) {
       let popularity_url = `https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
       let popularity = await axios.get(popularity_url);
       let popularity_data = popularity.data;
+      let language_labels = [];
+      let language_data = [];
 
       if (popularity_data.length % 100 === 0) {
-        console.log("passed");
         page += 1;
         popularity_url = `https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
         next_popularity_data = await axios.get(popularity_url);
-        console.log("next popularity: ", next_popularity_data);
         popularity_data = popularity_data.concat(next_popularity_data.data);
       }
 
-      console.log("popularity data : ", popularity_data);
       const popularity_datasets = [];
       const popularity_labels = [];
 
       for (let i = 0; i < popularity_data.length; i++) {
         popularity_datasets.push(popularity_data[i].stargazers_count);
         popularity_labels.push(popularity_data[i].name);
+        language_data.push(popularity_data[i].language);
       }
+
+      // credits to https://stackoverflow.com/questions/19395257/how-to-count-duplicate-value-in-an-array-in-javascript
+      language_labels = language_data.filter(function(elem, index, self) {
+        return index === self.indexOf(elem);
+      });
+      console.log(language_labels);
+
+      // credits to https://stackoverflow.com/questions/19395257/how-to-count-duplicate-value-in-an-array-in-javascript
+      var language_counts = {};
+      language_data.forEach(function(x) {
+        language_counts[x] = (language_counts[x] || 0) + 1;
+      });
+
+      var language_count = Object.keys(language_counts).map(function(key) {
+        return language_counts[key];
+      });
+
+      console.log(language_count);
 
       const repo_index = popularity_labels.indexOf(name);
       popularity_labels.splice(repo_index, 1).unshift(name);
@@ -128,7 +146,9 @@ export function getDashboardData(owner, name) {
               stars: result.data.repository.stargazers.totalCount,
               issues: result.data.repository.issues.totalCount,
               popularity_data: popularity_datasets,
-              popularity_labels: popularity_labels
+              popularity_labels: popularity_labels,
+              language_labels,
+              language_count
             }
           })
         );

@@ -31,7 +31,9 @@ function dashboardReducer(state = initialState, action) {
         stars: action.payload.stars,
         issues: action.payload.issues,
         popularity_data: action.payload.popularity_data,
-        popularity_labels: action.payload.popularity_labels
+        popularity_labels: action.payload.popularity_labels,
+        language_labels: action.payload.language_labels,
+        language_count: action.payload.language_count
       };
     default:
       return state;

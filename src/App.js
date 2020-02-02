@@ -44,6 +44,7 @@ class App extends React.Component {
         showModal: false
       });
       this.props.changeSearched();
+      // a little hack to refresh the page after a search
       this.props.history.push("/main");
       this.props.history.push("/dashboard");
     } catch {
