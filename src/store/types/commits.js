@@ -1,0 +1,2 @@
+export const CHANGE_LOADING = "CHANGE_LOADING";
+export const SET_COMMITS = "SET_COMMITS";

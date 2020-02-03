@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import Dashboard from "./pages/Dashboard";
 import Main from "./pages/Main";
 import Error from "./pages/Error";
+import Commits from "./pages/Commits";
 
 import { changeLoading } from "./store/action-creators/dashboard";
 import {
@@ -192,7 +193,7 @@ class App extends React.Component {
               </Route>
 
               <Route path="/commits">
-                <h1>Commits</h1>
+                <Commits owner={this.state.owner} name={this.state.name} />
               </Route>
 
               <Route path="/timeline">

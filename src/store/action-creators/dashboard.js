@@ -21,7 +21,7 @@ const client = new ApolloClient({
   request: async operation => {
     operation.setContext({
       headers: {
-        authorization: `token d19221a9ab540d9301a1c9e5592033b57ee7f2c3`
+        authorization: `token 79f15107c65fcbc3353573cfb7dd12af51a187fe`
       }
     });
   }
@@ -88,8 +88,12 @@ export function getDashboardData(owner, name) {
       let popularity_data = popularity.data;
       let language_labels = [];
       let language_data = [];
+      popularity_url = `https://api.github.com/users/${owner}/repos?per_page=100&page=${page +
+        1}`;
+      next_popularity_data = await axios.get(popularity_url);
 
-      if (popularity_data.length % 100 === 0) {
+      while (next_popularity_data.data.length !== 0) {
+        console.log(next_popularity_data.data);
         page += 1;
         popularity_url = `https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
         next_popularity_data = await axios.get(popularity_url);
@@ -109,7 +113,6 @@ export function getDashboardData(owner, name) {
       language_labels = language_data.filter(function(elem, index, self) {
         return index === self.indexOf(elem);
       });
-      console.log(language_labels);
 
       // credits to https://stackoverflow.com/questions/19395257/how-to-count-duplicate-value-in-an-array-in-javascript
       var language_counts = {};
@@ -120,8 +123,10 @@ export function getDashboardData(owner, name) {
       var language_count = Object.keys(language_counts).map(function(key) {
         return language_counts[key];
       });
+      let indexNull = language_labels.indexOf(null);
 
-      console.log(language_count);
+      language_labels.splice(indexNull, 1);
+      language_count.splice(indexNull, 1);
 
       const repo_index = popularity_labels.indexOf(name);
       popularity_labels.splice(repo_index, 1).unshift(name);
@@ -147,7 +152,7 @@ export function getDashboardData(owner, name) {
               issues: result.data.repository.issues.totalCount,
               popularity_data: popularity_datasets,
               popularity_labels: popularity_labels,
-              language_labels,
+              language_labels: language_labels.filter(i => i !== null),
               language_count
             }
           })

@@ -3,7 +3,9 @@ import "../styles/Dashboard.css";
 import CardPiece from "../components/CardPiece";
 import CardPieChart from "../components/CardPieChart";
 import CardHorizontalBarChart from "../components/CardHorizontalBarChart";
-import { CardDeck, Spinner } from "react-bootstrap";
+
+import CardDeck from "react-bootstrap/CardDeck";
+import Spinner from "react-bootstrap/Spinner";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
