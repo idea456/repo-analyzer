@@ -12,13 +12,18 @@ class CardTable extends React.Component {
     let ret = "";
     if (message.length >= 35) {
       ret = message.substring(0, 35) + "...";
+    } else {
+      return message;
     }
     return ret;
   }
 
   render() {
     return (
-      <div className="card my-custom-scrollbar .table-wrapper-scroll-y">
+      <div
+        className="card my-custom-scrollbar .table-wrapper-scroll-y"
+        style={{ height: 300, marginTop: 10 }}
+      >
         <div class="card-header">
           <strong>Recent commits</strong>
         </div>
@@ -31,7 +36,13 @@ class CardTable extends React.Component {
                     <Image
                       style={{ width: 40 }}
                       resizeMode="contain"
-                      src={data.author.avatar_url}
+                      src={(() => {
+                        try {
+                          return data.author.avatar_url;
+                        } catch {
+                          return require("../images/empty.jpg");
+                        }
+                      })()}
                       roundedCircle
                     />
                   </td>

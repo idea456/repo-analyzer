@@ -13,7 +13,7 @@ class Error extends React.Component {
         }}
       >
         <h2>Oh no! An error occured!</h2>
-        <i>P.S. Most likely it's a non existing repository name or owner </i>
+        <i>P.S. Most likely it's a non existing repository name or owner</i>
       </div>
     );
   }

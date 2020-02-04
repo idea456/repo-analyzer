@@ -59,7 +59,7 @@ class Commits extends React.Component {
                 data={this.props.timeline_data}
                 title="Total Commit activity"
                 labels={this.props.timeline_labels}
-                height={250}
+                height={300}
               />
               <CardTable data={this.props.commits_data} />
             </CardDeck>
@@ -70,7 +70,7 @@ class Commits extends React.Component {
                 second_data={this.props.timeline_deletions}
                 title="Code Additions"
                 second_title="Code Deletions"
-                height={500}
+                height={400}
               />
             </CardDeck>
           </Container>
@@ -89,7 +89,6 @@ const mapStateToProps = state => {
     commits_data: state.commits.commits_data,
     timeline_additions: state.commits.timeline_additions,
     timeline_deletions: state.commits.timeline_deletions
-    // loading: state.commits.loading
   };
 };
 

@@ -22,7 +22,7 @@ class CardTimeLineChart extends React.Component {
 
   render() {
     return (
-      <Card style={{ height: this.props.height }}>
+      <Card style={{ height: this.props.height, marginTop: 10 }}>
         <Card.Body>
           <Line
             data={this.data}

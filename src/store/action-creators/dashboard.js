@@ -15,19 +15,21 @@ export function setDashboard(payload) {
     payload
   };
 }
+
 // the apollo client
 const client = new ApolloClient({
   uri: "https://api.github.com/graphql",
   request: async operation => {
     operation.setContext({
       headers: {
-        authorization: `token 79f15107c65fcbc3353573cfb7dd12af51a187fe`
+        authorization: `token ${process.env.REACT_APP_GITHUB_TOKEN}`
       }
     });
   }
 });
 
 export function getDashboardData(owner, name) {
+  console.log(typeof process.env.REACT_APP_GITHUB_TOKEN);
   return async function(dispatch, setState) {
     const data = gql`
 {
@@ -92,6 +94,7 @@ export function getDashboardData(owner, name) {
         1}`;
       next_popularity_data = await axios.get(popularity_url);
 
+      // use pagination to go to the next page if there is more than 100 repositories
       while (next_popularity_data.data.length !== 0) {
         console.log(next_popularity_data.data);
         page += 1;
