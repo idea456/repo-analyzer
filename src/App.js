@@ -16,7 +16,7 @@ import {
   errorEncountered
 } from "./store/action-creators/global";
 
-let token = "f5050f7265ecbd79b98e53d89cfa3a60a3ee90f41";
+let token = "9994e22a2fa78e843d760ae6613d0a5f97b2e4ac1";
 
 class App extends React.Component {
   constructor() {
@@ -35,11 +35,14 @@ class App extends React.Component {
     this.submitSearch = this.submitSearch.bind(this);
   }
 
+  getToken(token) {
+    return token.substring(0, token.length - 1);
+  }
   async submitSearch() {
     const target = `https://cors-anywhere.herokuapp.com/https://api.github.com/users/${this.textOwner.current.value}/repos`;
     const data = await axios.get(target, {
       headers: {
-        Authorization: `token ${token}`
+        Authorization: `token ${this.getToken(token)}`
       }
     });
     try {

@@ -2,6 +2,12 @@ import { CHANGE_LOADING, SET_DASHBOARD } from "../types/dashboard";
 import ApolloClient, { gql } from "apollo-boost";
 import axios from "axios";
 
+let token = "9994e22a2fa78e843d760ae6613d0a5f97b2e4ac1";
+
+function getToken(token) {
+  return token.substring(0, token.length - 1);
+}
+
 export function changeLoading(payload) {
   return {
     type: CHANGE_LOADING,
@@ -22,7 +28,7 @@ const client = new ApolloClient({
   request: async operation => {
     operation.setContext({
       headers: {
-        authorization: `token 0f40d7db2c4e868cdead82dcadc606320e2f14fc`
+        authorization: `token ${getToken(token)}`
       }
     });
   }
@@ -88,7 +94,7 @@ export function getDashboardData(owner, name) {
       let popularity_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
       let popularity = await axios.get(popularity_url, {
         headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
+          Authorization: `token ${getToken(token)}`
         }
       });
       let popularity_data = popularity.data;
@@ -99,7 +105,7 @@ export function getDashboardData(owner, name) {
       }`;
       next_popularity_data = await axios.get(popularity_url, {
         headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
+          Authorization: `token ${getToken(token)}`
         }
       });
 
@@ -110,7 +116,7 @@ export function getDashboardData(owner, name) {
         popularity_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
         next_popularity_data = await axios.get(popularity_url, {
           headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
+            Authorization: `token ${getToken(token)}`
           }
         });
         popularity_data = popularity_data.concat(next_popularity_data.data);

@@ -1,6 +1,12 @@
 import { CHANGE_LOADING, SET_COMMITS } from "../types/commits";
 import axios from "axios";
 
+let token = "9994e22a2fa78e843d760ae6613d0a5f97b2e4ac1";
+
+function getToken(token) {
+  return token.substring(0, token.length - 1);
+}
+
 export function changeLoading(payload) {
   return {
     type: CHANGE_LOADING,
@@ -14,14 +20,14 @@ export function getCommitsData(owner, name) {
     const url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/stats/commit_activity`;
     const { data } = await axios.get(url, {
       headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
+        Authorization: `token ${getToken(token)}`
       }
     });
 
     const commits_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/commits`;
     const response = await axios.get(commits_url, {
       headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
+        Authorization: `token ${getToken(token)}`
       }
     });
     let commit_labels = [];
@@ -41,7 +47,7 @@ export function getCommitsData(owner, name) {
     const code_frequency_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/stats/code_frequency`;
     const code_frequency_data = await axios.get(code_frequency_url, {
       headers: {
-        Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
+        Authorization: `token ${getToken(token)}`
       }
     });
 
