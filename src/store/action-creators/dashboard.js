@@ -88,7 +88,7 @@ export function getDashboardData(owner, name) {
       let popularity_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
       let popularity = await axios.get(popularity_url, {
         headers: {
-          username: process.env.REACT_APP_GITHUB_TOKEN
+          Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
         }
       });
       let popularity_data = popularity.data;
@@ -99,7 +99,7 @@ export function getDashboardData(owner, name) {
       }`;
       next_popularity_data = await axios.get(popularity_url, {
         headers: {
-          username: process.env.REACT_APP_GITHUB_TOKEN
+          Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
         }
       });
 
@@ -110,7 +110,7 @@ export function getDashboardData(owner, name) {
         popularity_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
         next_popularity_data = await axios.get(popularity_url, {
           headers: {
-            username: process.env.REACT_APP_GITHUB_TOKEN
+            Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
           }
         });
         popularity_data = popularity_data.concat(next_popularity_data.data);

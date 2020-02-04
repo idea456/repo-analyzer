@@ -16,6 +16,8 @@ import {
   errorEncountered
 } from "./store/action-creators/global";
 
+let token = "f5050f7265ecbd79b98e53d89cfa3a60a3ee90f41";
+
 class App extends React.Component {
   constructor() {
     super();
@@ -37,7 +39,7 @@ class App extends React.Component {
     const target = `https://cors-anywhere.herokuapp.com/https://api.github.com/users/${this.textOwner.current.value}/repos`;
     const data = await axios.get(target, {
       headers: {
-        username: process.env.REACT_APP_GITHUB_TOKEN
+        Authorization: `token ${token}`
       }
     });
     try {

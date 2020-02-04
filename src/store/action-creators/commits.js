@@ -14,14 +14,14 @@ export function getCommitsData(owner, name) {
     const url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/stats/commit_activity`;
     const { data } = await axios.get(url, {
       headers: {
-        username: process.env.REACT_APP_GITHUB_TOKEN
+        Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
       }
     });
 
     const commits_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/commits`;
     const response = await axios.get(commits_url, {
       headers: {
-        username: process.env.REACT_APP_GITHUB_TOKEN
+        Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
       }
     });
     let commit_labels = [];
@@ -41,7 +41,7 @@ export function getCommitsData(owner, name) {
     const code_frequency_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/stats/code_frequency`;
     const code_frequency_data = await axios.get(code_frequency_url, {
       headers: {
-        username: process.env.REACT_APP_GITHUB_TOKEN
+        Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`
       }
     });
 
