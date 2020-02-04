@@ -40,11 +40,7 @@ class App extends React.Component {
   }
   async submitSearch() {
     const target = `https://cors-anywhere.herokuapp.com/https://api.github.com/users/${this.textOwner.current.value}/repos`;
-    const data = await axios.get(target, {
-      headers: {
-        Authorization: `token ${this.getToken(token)}`
-      }
-    });
+    const data = await axios.get(target);
     try {
       // this.setState({ showModal: false });
       this.setState({

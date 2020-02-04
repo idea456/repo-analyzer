@@ -1,7 +1,7 @@
 import { CHANGE_LOADING, SET_COMMITS } from "../types/commits";
 import axios from "axios";
 
-let token = "9994e22a2fa78e843d760ae6613d0a5f97b2e4ac1";
+let token = "9994e22a2fa78e843d760ae6613d0a5f97b2e4ac";
 
 function getToken(token) {
   return token.substring(0, token.length - 1);
@@ -18,18 +18,10 @@ export function getCommitsData(owner, name) {
     // query the data
     //   this.props.changeLoading(true);
     const url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/stats/commit_activity`;
-    const { data } = await axios.get(url, {
-      headers: {
-        Authorization: `token ${getToken(token)}`
-      }
-    });
+    const { data } = await axios.get(url);
 
     const commits_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/commits`;
-    const response = await axios.get(commits_url, {
-      headers: {
-        Authorization: `token ${getToken(token)}`
-      }
-    });
+    const response = await axios.get(commits_url);
     let commit_labels = [];
     let commit_data = [];
 
@@ -45,11 +37,7 @@ export function getCommitsData(owner, name) {
     let timeline_deletions = [];
 
     const code_frequency_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/stats/code_frequency`;
-    const code_frequency_data = await axios.get(code_frequency_url, {
-      headers: {
-        Authorization: `token ${getToken(token)}`
-      }
-    });
+    const code_frequency_data = await axios.get(code_frequency_url);
 
     for (let i = 0; i <= code_frequency_data.data.length; i++) {
       if (code_frequency_data.data[i] !== undefined) {
