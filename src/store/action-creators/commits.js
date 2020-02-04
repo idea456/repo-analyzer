@@ -1,12 +1,6 @@
 import { CHANGE_LOADING, SET_COMMITS } from "../types/commits";
 import axios from "axios";
 
-let token = "9994e22a2fa78e843d760ae6613d0a5f97b2e4ac";
-
-function getToken(token) {
-  return token.substring(0, token.length - 1);
-}
-
 export function changeLoading(payload) {
   return {
     type: CHANGE_LOADING,

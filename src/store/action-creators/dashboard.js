@@ -2,7 +2,7 @@ import { CHANGE_LOADING, SET_DASHBOARD } from "../types/dashboard";
 import ApolloClient, { gql } from "apollo-boost";
 import axios from "axios";
 
-let token = "9994e22a2fa78e843d760ae6613d0a5f97b2e4ac1";
+let token = "418c0886216f6be2b8a53154a8a62d984d345d8c1";
 
 function getToken(token) {
   return token.substring(0, token.length - 1);
