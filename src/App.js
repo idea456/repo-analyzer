@@ -34,7 +34,7 @@ class App extends React.Component {
   }
 
   async submitSearch() {
-    const target = `https://api.github.com/users/${this.textOwner.current.value}/repos`;
+    const target = `https://api.github.com/users/${this.textOwner.current.value}/repos&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`;
     const data = await axios.get(target);
     try {
       // this.setState({ showModal: false });

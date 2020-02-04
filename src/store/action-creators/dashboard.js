@@ -85,20 +85,22 @@ export function getDashboardData(owner, name) {
       // quering the popularity section
       let page = 1;
       let next_popularity_data = [];
-      let popularity_url = `https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
+      let popularity_url = `https://api.github.com/users/${owner}/repos?per_page=100&page=${page}&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`;
       let popularity = await axios.get(popularity_url);
       let popularity_data = popularity.data;
       let language_labels = [];
       let language_data = [];
       popularity_url = `https://api.github.com/users/${owner}/repos?per_page=100&page=${page +
-        1}`;
+        1}&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${
+        process.env.REACT_APP_CLIENT_SECRET
+      }`;
       next_popularity_data = await axios.get(popularity_url);
 
       // use pagination to go to the next page if there is more than 100 repositories
       while (next_popularity_data.data.length !== 0) {
         console.log(next_popularity_data.data);
         page += 1;
-        popularity_url = `https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
+        popularity_url = `https://api.github.com/users/${owner}/repos?per_page=100&page=${page}&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`;
         next_popularity_data = await axios.get(popularity_url);
         popularity_data = popularity_data.concat(next_popularity_data.data);
       }
