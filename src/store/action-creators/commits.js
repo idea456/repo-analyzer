@@ -11,11 +11,19 @@ export function getCommitsData(owner, name) {
   return async function(dispatch, getState) {
     // query the data
     //   this.props.changeLoading(true);
-    const url = `https://api.github.com/repos/${owner}/${name}/stats/commit_activity&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`;
-    const { data } = await axios.get(url);
+    const url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/stats/commit_activity`;
+    const { data } = await axios.get(url, {
+      headers: {
+        username: process.env.REACT_APP_GITHUB_TOKEN
+      }
+    });
 
-    const commits_url = `https://api.github.com/repos/${owner}/${name}/commits&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`;
-    const response = await axios.get(commits_url);
+    const commits_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/commits`;
+    const response = await axios.get(commits_url, {
+      headers: {
+        username: process.env.REACT_APP_GITHUB_TOKEN
+      }
+    });
     let commit_labels = [];
     let commit_data = [];
 
@@ -30,8 +38,12 @@ export function getCommitsData(owner, name) {
     let timeline_additions = [];
     let timeline_deletions = [];
 
-    const code_frequency_url = `https://api.github.com/repos/${owner}/${name}/stats/code_frequency&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`;
-    const code_frequency_data = await axios.get(code_frequency_url);
+    const code_frequency_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/stats/code_frequency`;
+    const code_frequency_data = await axios.get(code_frequency_url, {
+      headers: {
+        username: process.env.REACT_APP_GITHUB_TOKEN
+      }
+    });
 
     for (let i = 0; i <= code_frequency_data.data.length; i++) {
       if (code_frequency_data.data[i] !== undefined) {

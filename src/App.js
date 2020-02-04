@@ -34,8 +34,12 @@ class App extends React.Component {
   }
 
   async submitSearch() {
-    const target = `https://api.github.com/users/${this.textOwner.current.value}/repos&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`;
-    const data = await axios.get(target);
+    const target = `https://cors-anywhere.herokuapp.com/https://api.github.com/users/${this.textOwner.current.value}/repos`;
+    const data = await axios.get(target, {
+      headers: {
+        username: process.env.REACT_APP_GITHUB_TOKEN
+      }
+    });
     try {
       // this.setState({ showModal: false });
       this.setState({
