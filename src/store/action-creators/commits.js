@@ -9,12 +9,16 @@ export function changeLoading(payload) {
 }
 export function getCommitsData(owner, name) {
   return async function(dispatch, getState) {
+    dispatch({
+      type: CHANGE_LOADING,
+      payload: true
+    });
     // query the data
     //   this.props.changeLoading(true);
-    const url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/stats/commit_activity`;
+    const url = `https://api.github.com/repos/${owner}/${name}/stats/commit_activity`;
     const { data } = await axios.get(url);
 
-    const commits_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/commits`;
+    const commits_url = `https://api.github.com/repos/${owner}/${name}/commits`;
     const response = await axios.get(commits_url);
     let commit_labels = [];
     let commit_data = [];
@@ -27,27 +31,13 @@ export function getCommitsData(owner, name) {
       });
     }
 
-    let timeline_additions = [];
-    let timeline_deletions = [];
-
-    const code_frequency_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/repos/${owner}/${name}/stats/code_frequency`;
-    const code_frequency_data = await axios.get(code_frequency_url);
-
-    for (let i = 0; i <= code_frequency_data.data.length; i++) {
-      if (code_frequency_data.data[i] !== undefined) {
-        let date = new Date(
-          code_frequency_data.data[i][0] * 1000
-        ).toISOString();
-        timeline_additions.push({
-          t: date,
-          y: code_frequency_data.data[i][1]
-        });
-        timeline_deletions.push({
-          t: date,
-          y: code_frequency_data.data[i][2]
-        });
-      }
-    }
+    const commit_count = await axios.get(
+      `https://api.github.com/repos/${owner}/${name}/stats/participation`
+    );
+    console.log(commit_count);
+    const commit_count_all = commit_count.data.all;
+    const commit_count_owner = commit_count.data.owner;
+    console.log("commit count: ", commit_count_all, commit_count_owner);
 
     dispatch({
       type: SET_COMMITS,
@@ -56,8 +46,8 @@ export function getCommitsData(owner, name) {
         timeline_labels: commit_labels,
         timeline_data: commit_data,
         commits_data: response.data,
-        timeline_additions,
-        timeline_deletions
+        commit_count_all,
+        commit_count_owner
       }
     });
   };

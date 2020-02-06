@@ -1,5 +1,6 @@
 import React from "react";
 import "../styles/Dashboard.css";
+
 import CardPiece from "../components/CardPiece";
 import CardPieChart from "../components/CardPieChart";
 import CardHorizontalBarChart from "../components/CardHorizontalBarChart";

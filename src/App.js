@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard";
 import Main from "./pages/Main";
 import Error from "./pages/Error";
 import Commits from "./pages/Commits";
+import CodeFrequency from "./pages/CodeFrequency";
 
 import { changeLoading } from "./store/action-creators/dashboard";
 import {
@@ -34,13 +35,16 @@ class App extends React.Component {
   }
 
   async submitSearch() {
-    const target = `https://cors-anywhere.herokuapp.com/https://api.github.com/users/${this.textOwner.current.value}/repos`;
+    const target = `https://api.github.com/users/${this.textOwner.current.value.replace(
+      " ",
+      ""
+    )}/repos`;
     const data = await axios.get(target);
     try {
       // this.setState({ showModal: false });
       this.setState({
-        owner: this.textOwner.current.value,
-        name: this.textName.current.value,
+        owner: this.textOwner.current.value.replace(" ", ""),
+        name: this.textName.current.value.replace(" ", ""),
         image: data.data[0].owner.avatar_url,
         showModal: false
       });
@@ -161,8 +165,8 @@ class App extends React.Component {
                 </Link>
               </li>
               <li>
-                <Link className="sidebar-link" to="/timeline">
-                  <strong>Timeline</strong>
+                <Link className="sidebar-link" to="/code-frequency">
+                  <strong>Code frequency</strong>
                 </Link>
               </li>
               <li>
@@ -179,10 +183,10 @@ class App extends React.Component {
                 <Error />
               </Route>
               <Route exact path="/">
-                <Main />
+                <Main handleShowModal={this.handleShowModal} />
               </Route>
               <Route path="/main">
-                <Main />
+                <Main handleShowModal={this.handleShowModal} />
               </Route>
               <Route path="/dashboard">
                 <Dashboard
@@ -196,8 +200,11 @@ class App extends React.Component {
                 <Commits owner={this.state.owner} name={this.state.name} />
               </Route>
 
-              <Route path="/timeline">
-                <h1>Timeline</h1>
+              <Route path="/code-frequency">
+                <CodeFrequency
+                  owner={this.state.owner}
+                  name={this.state.name}
+                />
               </Route>
 
               <Route path="/files">

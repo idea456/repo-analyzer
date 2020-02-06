@@ -12,7 +12,7 @@ import {
 } from "../store/action-creators/commits";
 
 import CardTimeLineChart from "../components/CardTimeLineChart";
-import CardTable from "../components/CardTable";
+import CardTable from "../components/CommitsTable";
 import CardBarChart from "../components/CardBarChart";
 
 class Commits extends React.Component {
@@ -59,18 +59,23 @@ class Commits extends React.Component {
                 data={this.props.timeline_data}
                 title="Total Commit activity"
                 labels={this.props.timeline_labels}
+                titleDisplay={true}
+                legendDisplay={false}
+                mainTitle="Weekly commit activity"
                 height={300}
               />
               <CardTable data={this.props.commits_data} />
             </CardDeck>
 
             <CardDeck style={{ width: "100%" }}>
-              <CardBarChart
-                data={this.props.timeline_additions}
-                second_data={this.props.timeline_deletions}
-                title="Code Additions"
-                second_title="Code Deletions"
-                height={400}
+              <CardTimeLineChart
+                data={this.props.commit_count_all}
+                second_data={this.props.commit_count_owner}
+                labels={this.props.timeline_labels}
+                mainTitle="Commit count for all users"
+                titleDisplay={true}
+                legendDisplay={false}
+                height={280}
               />
             </CardDeck>
           </Container>
@@ -87,8 +92,8 @@ const mapStateToProps = state => {
     timeline_labels: state.commits.timeline_labels,
     loading: state.commits.loading,
     commits_data: state.commits.commits_data,
-    timeline_additions: state.commits.timeline_additions,
-    timeline_deletions: state.commits.timeline_deletions
+    commit_count_all: state.commits.commit_count_all,
+    commit_count_owner: state.commits.commit_count_owner
   };
 };
 

@@ -24,8 +24,8 @@ function commitsReducer(state = initialState, action) {
         timeline_commit_data_owner: action.payload.timeline_commit_data_owner,
         timeline_commit_data_all: action.payload.timeline_commit_data_all,
         commits_data: action.payload.commits_data,
-        timeline_additions: action.payload.timeline_additions,
-        timeline_deletions: action.payload.timeline_deletions
+        commit_count_owner: action.payload.commit_count_owner,
+        commit_count_all: action.payload.commit_count_all
       };
     default:
       return state;

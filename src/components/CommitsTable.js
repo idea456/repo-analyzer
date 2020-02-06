@@ -29,9 +29,9 @@ class CardTable extends React.Component {
         </div>
         <table className="table">
           <tbody>
-            {this.props.data.map(data => {
+            {this.props.data.map((data, i) => {
               return (
-                <tr>
+                <tr key={i}>
                   <td>
                     <Image
                       style={{ width: 40 }}

@@ -91,12 +91,12 @@ export function getDashboardData(owner, name) {
       // quering the popularity section
       let page = 1;
       let next_popularity_data = [];
-      let popularity_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
+      let popularity_url = `https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
       let popularity = await axios.get(popularity_url);
       let popularity_data = popularity.data;
       let language_labels = [];
       let language_data = [];
-      popularity_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/users/${owner}/repos?per_page=100&page=${page +
+      popularity_url = `https://api.github.com/users/${owner}/repos?per_page=100&page=${page +
         1}
       }`;
       next_popularity_data = await axios.get(popularity_url);
@@ -105,7 +105,7 @@ export function getDashboardData(owner, name) {
       while (next_popularity_data.data.length !== 0) {
         console.log(next_popularity_data.data);
         page += 1;
-        popularity_url = `https://cors-anywhere.herokuapp.com/https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
+        popularity_url = `https://api.github.com/users/${owner}/repos?per_page=100&page=${page}`;
         next_popularity_data = await axios.get(popularity_url);
         popularity_data = popularity_data.concat(next_popularity_data.data);
       }

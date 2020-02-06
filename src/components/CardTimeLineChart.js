@@ -28,6 +28,13 @@ class CardTimeLineChart extends React.Component {
             data={this.data}
             options={{
               maintainAspectRatio: false,
+              legend: {
+                display: this.props.legendDisplay
+              },
+              title: {
+                text: this.props.mainTitle,
+                display: this.props.titleDisplay
+              },
               scales: {
                 xAxes: [
                   {
