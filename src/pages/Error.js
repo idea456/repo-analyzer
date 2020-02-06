@@ -13,7 +13,11 @@ class Error extends React.Component {
         }}
       >
         <h2>Oh no! An error occured!</h2>
-        <i>P.S. Most likely it's a non existing repository name or owner</i>
+        <i>
+          {this.props.msg === undefined
+            ? "Most likely it is a non existent owner or repository name"
+            : this.props.msg}
+        </i>
       </div>
     );
   }

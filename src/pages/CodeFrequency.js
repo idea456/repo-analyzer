@@ -5,7 +5,6 @@ import { getCodeFrequencyData } from "../store/action-creators/code_frequency";
 
 import CardBarChart from "../components/CardBarChart";
 import CodeFrequencyTable from "../components/CodeFrequencyTable";
-import Sparkline from "../components/Sparkline";
 
 import CardDeck from "react-bootstrap/CardDeck";
 import Spinner from "react-bootstrap/Spinner";
@@ -26,43 +25,49 @@ class CodeFrequency extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.props.loading && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              paddingTop: "30px",
-              flexDirection: "column"
-            }}
-          >
-            <Spinner animation="border" variant="info" />
-            <br />
-            <h3>Loading the data...</h3>
-          </div>
-        )}
-        {!this.props.loading && (
-          <div>
-            <CardDeck style={{ width: "100%" }}>
-              <CodeFrequencyTable
-                contributors_data={this.props.contributors_data}
-              />
-            </CardDeck>
-            <CardDeck style={{ width: "100%" }}>
-              <CardBarChart
-                data={this.props.code_additions}
-                second_data={this.props.code_deletions}
-                title="Total Code Additions"
-                second_title="Total Code Deletions"
-                height={400}
-              />
-            </CardDeck>
-          </div>
-        )}
-      </div>
-    );
+    try {
+      return (
+        <div>
+          {this.props.loading && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingTop: "30px",
+                flexDirection: "column"
+              }}
+            >
+              <Spinner animation="border" variant="info" />
+              <br />
+              <h3>Loading the data...</h3>
+            </div>
+          )}
+          {!this.props.loading && (
+            <div>
+              <CardDeck style={{ width: "100%" }}>
+                <CodeFrequencyTable
+                  contributors_data={this.props.contributors_data}
+                />
+              </CardDeck>
+              <CardDeck style={{ width: "100%" }}>
+                <CardBarChart
+                  data={this.props.code_additions}
+                  second_data={this.props.code_deletions}
+                  title="Total Code Additions"
+                  second_title="Total Code Deletions"
+                  height={400}
+                />
+              </CardDeck>
+            </div>
+          )}
+        </div>
+      );
+    } catch {
+      // reload the page if the CodeFrequencyTable has not finished loading data yet
+      this.props.history.push("/main");
+      this.props.history.push("/code-frequency");
+    }
   }
 }
 

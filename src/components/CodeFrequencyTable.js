@@ -5,11 +5,15 @@ import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 
+import Error from "../pages/Error";
 import Sparkline from "../components/Sparkline";
 
 class CodeFrequencyTable extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      contributors_data: this.props.contributors_data
+    };
   }
 
   setupSparkline(array, type) {
@@ -42,7 +46,7 @@ class CodeFrequencyTable extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.contributors_data.map((data, i) => {
+            {this.state.contributors_data.map((data, i) => {
               return (
                 <tr key={i} onClick={() => console.log("clicked table ", i)}>
                   <td>

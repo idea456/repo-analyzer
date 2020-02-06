@@ -18,7 +18,7 @@ class Sparkline extends React.Component {
 
   // credits to https://stackoverflow.com/questions/12503146/create-an-array-with-same-element-repeated-multiple-times/24665085
   fillArray(value, len) {
-    if (len == 0) return [];
+    if (len === 0) return [];
     var a = [value];
     while (a.length * 2 <= len) a = a.concat(a);
     if (a.length < len) a = a.concat(a.slice(0, len - a.length));
