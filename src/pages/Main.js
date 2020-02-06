@@ -17,6 +17,7 @@ class Main extends React.Component {
         <Button
           size="lg"
           variant="outline-info"
+          style={{ marginTop: 20 }}
           onClick={this.props.handleShowModal}
         >
           Search for a repo

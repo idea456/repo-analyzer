@@ -54,8 +54,8 @@ class CodeFrequency extends React.Component {
               <CardBarChart
                 data={this.props.code_additions}
                 second_data={this.props.code_deletions}
-                title="Code Additions"
-                second_title="Code Deletions"
+                title="Total Code Additions"
+                second_title="Total Code Deletions"
                 height={400}
               />
             </CardDeck>
