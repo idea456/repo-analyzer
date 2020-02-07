@@ -5,7 +5,6 @@ import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 
-import Error from "../pages/Error";
 import Sparkline from "../components/Sparkline";
 
 class CodeFrequencyTable extends React.Component {

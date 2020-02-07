@@ -7,6 +7,7 @@ import CardHorizontalBarChart from "../components/CardHorizontalBarChart";
 
 import CardDeck from "react-bootstrap/CardDeck";
 import Spinner from "react-bootstrap/Spinner";
+import Image from "react-bootstrap/Image";
 
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
@@ -50,7 +51,11 @@ class Dashboard extends React.Component {
               flexDirection: "column"
             }}
           >
-            <Spinner animation="border" variant="info" />
+            <Image
+              style={{ width: 300, marginBottom: 20 }}
+              resizeMode="contain"
+              src={require("../images/cat.gif")}
+            />
             <br />
             <h3>Loading the data...</h3>
           </div>

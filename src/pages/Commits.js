@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import CardDeck from "react-bootstrap/CardDeck";
 import Spinner from "react-bootstrap/Spinner";
 import Container from "react-bootstrap/Container";
+import Image from "react-bootstrap/Image";
 
 import {
   getCommitsData,
@@ -47,7 +48,11 @@ class Commits extends React.Component {
               flexDirection: "column"
             }}
           >
-            <Spinner animation="border" variant="info" />
+            <Image
+              style={{ width: 300 }}
+              resizeMode="contain"
+              src={require("../images/cat.gif")}
+            />
             <br />
             <h3>Loading the data...</h3>
           </div>
