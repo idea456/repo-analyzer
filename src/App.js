@@ -14,7 +14,8 @@ import CodeFrequency from "./pages/CodeFrequency";
 import { changeLoading } from "./store/action-creators/dashboard";
 import {
   changeSearched,
-  errorEncountered
+  errorEncountered,
+  setError
 } from "./store/action-creators/global";
 
 class App extends React.Component {
@@ -49,12 +50,14 @@ class App extends React.Component {
         showModal: false
       });
       this.props.changeSearched();
+      this.props.setError(false);
       // a little hack to refresh the page after a search
       this.props.history.push("/main");
       this.props.history.push("/dashboard");
     } catch {
       // redirect to error page if an error occurs when setting the image
       this.setState({ showModal: false });
+      this.props.setError(true);
       this.props.history.push("/error");
     }
   }
@@ -115,9 +118,9 @@ class App extends React.Component {
           </Modal.Footer>
         </Modal>
 
-        <Navbar className="navbar" sticky="top">
+        <Navbar className="navbar py-0" sticky="top">
           <Navbar.Brand>
-            <strong>REPO ANALYZER</strong>
+            <h1>Repo Analyzer</h1>
           </Navbar.Brand>
 
           <Button
@@ -226,6 +229,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setError: payload => dispatch(setError(payload)),
     changeLoading: payload => dispatch(changeLoading()),
     changeSearched: () => dispatch(changeSearched()),
     errorEncountered: () => dispatch(errorEncountered())

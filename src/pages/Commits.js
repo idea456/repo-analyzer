@@ -29,6 +29,8 @@ class Commits extends React.Component {
   async componentDidMount() {
     if (!this.props.searched) {
       this.props.history.push("/main");
+    } else if (this.props.error) {
+      this.props.history.push("/error");
     } else {
       // query the data
       this.props.getCommitsData(this.props.owner, this.props.name);
@@ -98,7 +100,8 @@ const mapStateToProps = state => {
     loading: state.commits.loading,
     commits_data: state.commits.commits_data,
     commit_count_all: state.commits.commit_count_all,
-    commit_count_owner: state.commits.commit_count_owner
+    commit_count_owner: state.commits.commit_count_owner,
+    error: state.global.error
   };
 };
 

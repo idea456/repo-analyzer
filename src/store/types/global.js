@@ -1,2 +1,3 @@
 export const CHANGE_SEARCHED = "CHANGE_SEARCHED";
 export const ERROR_ENCOUNTERED = "ERROR_ENCOUNTERED";
+export const SET_ERROR = "SET_ERROR";

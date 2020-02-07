@@ -1,5 +1,12 @@
-* {
-  font-family: "Arial", sans-serif;
+.main-logo {
+  font-family: "Collegia", sans-serif;
+  text-align: center;
+  font-size: 30pt;
+}
+
+@font-face {
+  font-family: "Collegia";
+  src: url("./fonts/collegia.ttf");
 }
 
 html {
@@ -10,8 +17,10 @@ html {
   background-color: #2c455f;
 }
 
-.navbar strong {
-  font-size: 20pt;
+.navbar h1 {
+  padding-top: 10px;
+  font-family: "Collegia";
+  font-size: 30pt;
   color: white;
   margin-left: 5px;
 }

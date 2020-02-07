@@ -31,6 +31,8 @@ class Dashboard extends React.Component {
   componentDidMount() {
     if (!this.props.searched) {
       this.props.history.push("/main");
+    } else if (this.props.error) {
+      this.props.history.push("/error");
     } else {
       // query the data
       this.props.changeLoading(true);
@@ -116,7 +118,8 @@ const mapStateToProps = state => {
     popularity_data: state.dashboard.popularity_data,
     popularity_labels: state.dashboard.popularity_labels,
     language_labels: state.dashboard.language_labels,
-    language_count: state.dashboard.language_count
+    language_count: state.dashboard.language_count,
+    error: state.global.error
   };
 };
 

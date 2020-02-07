@@ -17,6 +17,8 @@ class CodeFrequency extends React.Component {
   async componentDidMount() {
     if (!this.props.searched) {
       this.props.history.push("/main");
+    } else if (this.props.error) {
+      this.props.history.push("/error");
     } else {
       // query the data
       this.props.getCodeFrequencyData(this.props.owner, this.props.name);
@@ -81,7 +83,8 @@ const mapStateToProps = state => {
     loading: state.code_frequency.loading,
     code_additions: state.code_frequency.code_additions,
     code_deletions: state.code_frequency.code_deletions,
-    contributors_data: state.code_frequency.contributors_data
+    contributors_data: state.code_frequency.contributors_data,
+    error: state.global.error
   };
 };
 
