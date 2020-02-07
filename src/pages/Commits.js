@@ -89,7 +89,7 @@ class Commits extends React.Component {
                 mainTitle="Commit count for all users"
                 titleDisplay={true}
                 legendDisplay={false}
-                height={280}
+                height={window.innerHeight * 0.6}
                 refreshPage={this.refreshPage}
               />
             </CardDeck>

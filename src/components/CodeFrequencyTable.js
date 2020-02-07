@@ -33,7 +33,10 @@ class CodeFrequencyTable extends React.Component {
 
   render() {
     return (
-      <div className="card my-custom-scrollbar .table-wrapper-scroll-y">
+      <div
+        style={{ height: window.innerHeight * 0.7 }}
+        className="card my-custom-scrollbar .table-wrapper-scroll-y"
+      >
         <Table hover>
           <thead>
             <tr>
