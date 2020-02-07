@@ -51,7 +51,7 @@ class CardTable extends React.Component {
                     <Button
                       variant="info"
                       onClick={() => {
-                        window.location.href = data.html_url;
+                        window.open(data.html_url);
                       }}
                     >
                       Show more

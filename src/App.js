@@ -178,6 +178,32 @@ class App extends React.Component {
                 </Link>
               </li>
             </ul>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingTop: "30px",
+                flexDirection: "column",
+                fontSize: 15
+              }}
+            >
+              <Link
+                style={{ color: "white" }}
+                onClick={() =>
+                  window.open("https://github.com/idea456/repo-analyzer")
+                }
+              >
+                Check the project on Github
+              </Link>
+              <Image
+                style={{ marginTop: 10 }}
+                src={require("./images/github.png")}
+                onClick={() =>
+                  window.open("https://github.com/idea456/repo-analyzer")
+                }
+              />
+            </div>
           </div>
 
           <div className="main-content">

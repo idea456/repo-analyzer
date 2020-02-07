@@ -37,6 +37,12 @@ class Commits extends React.Component {
     }
   }
 
+  refreshPage() {
+    console.log("refreshing...");
+    this.props.history.push("/main");
+    this.props.history.push("/commits");
+  }
+
   render() {
     return (
       <div>
@@ -70,6 +76,7 @@ class Commits extends React.Component {
                 legendDisplay={false}
                 mainTitle="Weekly commit activity"
                 height={300}
+                refreshPage={this.refreshPage}
               />
               <CardTable data={this.props.commits_data} />
             </CardDeck>
@@ -83,6 +90,7 @@ class Commits extends React.Component {
                 titleDisplay={true}
                 legendDisplay={false}
                 height={280}
+                refreshPage={this.refreshPage}
               />
             </CardDeck>
           </Container>

@@ -20,6 +20,14 @@ class CardTimeLineChart extends React.Component {
     };
   }
 
+  componentDidMount() {
+    console.log("emptY?");
+    if (this.props.data === undefined || this.props.data === []) {
+      console.log("YES EMPTY");
+      this.props.refreshPage();
+    }
+  }
+
   render() {
     return (
       <Card style={{ height: this.props.height, marginTop: 10 }}>
