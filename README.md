@@ -1,5 +1,9 @@
 # Repo analyzer
 
+Repo analyzer is a simple and fun website to display stats about a Github repository.
+
+# Screenshots
+
 ![screen1](https://user-images.githubusercontent.com/25546711/73929122-dd522100-4906-11ea-9554-4212707886fb.png)
 
 ![screencapture-localhost-3000-commits-2020-02-05-13_59_38](https://user-images.githubusercontent.com/25546711/73929158-e5aa5c00-4906-11ea-8345-a103dc478f73.png)
