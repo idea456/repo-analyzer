@@ -5,9 +5,9 @@ import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 
-import Sparkline from "../components/Sparkline";
+import Sparkline from "./Sparkline";
 
-class CodeFrequencyTable extends React.Component {
+class ContributorsTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +34,7 @@ class CodeFrequencyTable extends React.Component {
   render() {
     return (
       <div
-        style={{ height: window.innerHeight * 0.7 }}
+        style={{ height: window.innerHeight * 0.83 }}
         className="card my-custom-scrollbar .table-wrapper-scroll-y"
       >
         <Table hover>
@@ -42,7 +42,7 @@ class CodeFrequencyTable extends React.Component {
             <tr>
               <th></th>
               <th>Contributor</th>
-              <th>Total Commit count</th>
+              <th>Total Commits</th>
               <th>Additions</th>
               <th>Deletions</th>
             </tr>
@@ -79,4 +79,4 @@ class CodeFrequencyTable extends React.Component {
   }
 }
 
-export default CodeFrequencyTable;
+export default ContributorsTable;

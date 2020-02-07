@@ -4,7 +4,6 @@ import { withRouter } from "react-router-dom";
 import { getCodeFrequencyData } from "../store/action-creators/code_frequency";
 
 import CardBarChart from "../components/CardBarChart";
-import CodeFrequencyTable from "../components/CodeFrequencyTable";
 
 import CardDeck from "react-bootstrap/CardDeck";
 import Image from "react-bootstrap/Image";
@@ -22,7 +21,6 @@ class CodeFrequency extends React.Component {
     } else {
       // query the data
       this.props.getCodeFrequencyData(this.props.owner, this.props.name);
-      console.log("contributors data: ", this.props.contributors_data);
     }
   }
 
@@ -51,18 +49,18 @@ class CodeFrequency extends React.Component {
           )}
           {!this.props.loading && (
             <div>
-              <CardDeck style={{ width: "100%" }}>
+              {/* <CardDeck style={{ width: "100%" }}>
                 <CodeFrequencyTable
                   contributors_data={this.props.contributors_data}
                 />
-              </CardDeck>
+              </CardDeck> */}
               <CardDeck style={{ width: "100%" }}>
                 <CardBarChart
                   data={this.props.code_additions}
                   second_data={this.props.code_deletions}
                   title="Total Code Additions"
                   second_title="Total Code Deletions"
-                  height={400}
+                  height={window.innerHeight * 0.83}
                 />
               </CardDeck>
             </div>
@@ -83,7 +81,6 @@ const mapStateToProps = state => {
     loading: state.code_frequency.loading,
     code_additions: state.code_frequency.code_additions,
     code_deletions: state.code_frequency.code_deletions,
-    contributors_data: state.code_frequency.contributors_data,
     error: state.global.error
   };
 };

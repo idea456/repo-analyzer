@@ -11,10 +11,6 @@ export function getCodeFrequencyData(owner, name) {
       payload: true
     });
 
-    let contributors_url = `https://api.github.com/repos/${owner}/${name}/stats/contributors`;
-    const contributors = await axios.get(contributors_url);
-    const contributors_data = contributors.data;
-
     let code_additions = [];
     let code_deletions = [];
 
@@ -42,8 +38,7 @@ export function getCodeFrequencyData(owner, name) {
       payload: {
         loading: false,
         code_additions,
-        code_deletions,
-        contributors_data
+        code_deletions
       }
     });
   };

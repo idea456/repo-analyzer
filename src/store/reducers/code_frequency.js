@@ -21,8 +21,7 @@ function codeFrequencyReducer(state = initialState, action) {
         ...state,
         loading: action.payload.loading,
         code_additions: action.payload.code_additions,
-        code_deletions: action.payload.code_deletions,
-        contributors_data: action.payload.contributors_data
+        code_deletions: action.payload.code_deletions
       };
     default:
       return state;

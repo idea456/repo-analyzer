@@ -10,7 +10,7 @@ import Main from "./pages/Main";
 import Error from "./pages/Error";
 import Commits from "./pages/Commits";
 import CodeFrequency from "./pages/CodeFrequency";
-import Others from "./pages/Others";
+import Contributors from "./pages/Contributors";
 
 import { changeLoading } from "./store/action-creators/dashboard";
 import {
@@ -169,13 +169,13 @@ class App extends React.Component {
                 </Link>
               </li>
               <li>
-                <Link className="sidebar-link" to="/code-frequency">
-                  <strong>Code frequency</strong>
+                <Link className="sidebar-link" to="/contributors">
+                  <strong>Contributors</strong>
                 </Link>
               </li>
               <li>
-                <Link className="sidebar-link" to="/others">
-                  <strong>Others</strong>
+                <Link className="sidebar-link" to="/code-frequency">
+                  <strong>Code frequency</strong>
                 </Link>
               </li>
             </ul>
@@ -237,8 +237,8 @@ class App extends React.Component {
                 />
               </Route>
 
-              <Route path="/others">
-                <Others owner={this.state.owner} name={this.state.name} />
+              <Route path="/contributors">
+                <Contributors owner={this.state.owner} name={this.state.name} />
               </Route>
             </Switch>
           </div>
