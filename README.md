@@ -2,7 +2,7 @@
 
 ---
 
-Repo analyzer is a simple and fun website to display stats about a Github repository.
+Repo analyzer is a simple and fun website , made with React, to display stats about a Github repository.
 Check it out here : https://repo-analyzer.herokuapp.com/
 
 # Installation
