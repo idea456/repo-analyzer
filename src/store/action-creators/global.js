@@ -15,6 +15,7 @@ export function setError(payload) {
 
 export function errorEncountered() {
   return {
-    type: ERROR_ENCOUNTERED
+    type: ERROR_ENCOUNTERED,
+    payload: true
   };
 }

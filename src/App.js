@@ -41,7 +41,7 @@ class App extends React.Component {
       " ",
       ""
     )}/repos`;
-    const data = await axios.get(target);
+    const data = await axios.get(target).catch();
     try {
       // this.setState({ showModal: false });
       this.setState({

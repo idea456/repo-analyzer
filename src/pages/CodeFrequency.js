@@ -9,10 +9,6 @@ import CardDeck from "react-bootstrap/CardDeck";
 import Image from "react-bootstrap/Image";
 
 class CodeFrequency extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   async componentDidMount() {
     if (!this.props.searched) {
       this.props.history.push("/main");

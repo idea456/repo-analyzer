@@ -1,4 +1,4 @@
-import { CHANGE_SEARCHED, ERROR_ENCOUNTERED, SET_ERROR } from "../types/global";
+import { CHANGE_SEARCHED, ERROR_ENCOUNTERED } from "../types/global";
 
 const initialState = {
   searched: false,
@@ -11,7 +11,7 @@ function globalReducer(state = initialState, action) {
       return {
         searched: true
       };
-    case SET_ERROR:
+    case ERROR_ENCOUNTERED:
       return {
         ...state,
         error: action.payload

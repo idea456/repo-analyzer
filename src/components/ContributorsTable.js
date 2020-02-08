@@ -1,8 +1,7 @@
 import React from "react";
-import "../styles/Commits.css";
+import "../styles/Contributors.css";
 
 import Table from "react-bootstrap/Table";
-import Card from "react-bootstrap/Card";
 import Image from "react-bootstrap/Image";
 
 import Sparkline from "./Sparkline";
@@ -33,25 +32,22 @@ class ContributorsTable extends React.Component {
 
   render() {
     return (
-      <div
-        style={{ height: window.innerHeight * 0.83 }}
-        className="card my-custom-scrollbar .table-wrapper-scroll-y"
-      >
+      <div style={{ height: window.innerHeight * 0.85 }} className="card">
         <Table hover>
           <thead>
             <tr>
-              <th></th>
+              <th style={{ width: 60 }}></th>
               <th>Contributor</th>
               <th>Total Commits</th>
               <th>Additions</th>
               <th>Deletions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody style={{ height: window.innerHeight * 0.77 }}>
             {this.state.contributors_data.map((data, i) => {
               return (
                 <tr key={i} onClick={() => console.log("clicked table ", i)}>
-                  <td>
+                  <td style={{ width: 60 }}>
                     <Image
                       style={{ width: 40 }}
                       resizeMode="contain"
