@@ -6,10 +6,13 @@ export function changeSearched() {
   };
 }
 
-export function setError(payload) {
+export function setError(isError, msg) {
   return {
     type: SET_ERROR,
-    payload
+    payload: {
+      error: isError,
+      msg
+    }
   };
 }
 

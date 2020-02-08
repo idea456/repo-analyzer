@@ -41,13 +41,26 @@ class App extends React.Component {
       " ",
       ""
     )}/repos`;
-    const data = await axios.get(target).catch();
+    const data = await axios.get(target).catch(err => {
+      // if the user has no internet connection
+      if (err.message === "Network Error") {
+        this.setState({ showModal: false });
+        this.props.setError(
+          true,
+          "Please check the internet connection and try again"
+        );
+        this.props.history.push("/error");
+      }
+    });
     try {
-      // this.setState({ showModal: false });
+      this.setState({ showModal: false });
       this.setState({
         owner: this.textOwner.current.value.replace(" ", ""),
         name: this.textName.current.value.replace(" ", ""),
-        image: data.data[0].owner.avatar_url,
+        image:
+          data.data[0].owner.avatar_url === undefined
+            ? require("./images/empty.jpg")
+            : data.data[0].owner.avatar_url,
         showModal: false
       });
       this.props.changeSearched();
@@ -57,8 +70,13 @@ class App extends React.Component {
       this.props.history.push("/dashboard");
     } catch {
       // redirect to error page if an error occurs when setting the image
-      this.setState({ showModal: false });
-      this.props.setError(true);
+      // if error does not exists
+      if (!this.props.error) {
+        this.props.setError(
+          true,
+          "Please check if owner or repository name exists"
+        );
+      }
       this.props.history.push("/error");
     }
   }
@@ -250,13 +268,14 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    searched: state.global.searched
+    searched: state.global.searched,
+    error: state.global.error
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    setError: payload => dispatch(setError(payload)),
+    setError: (isError, msg) => dispatch(setError(isError, msg)),
     changeLoading: payload => dispatch(changeLoading()),
     changeSearched: () => dispatch(changeSearched()),
     errorEncountered: () => dispatch(errorEncountered())
@@ -264,5 +283,3 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
-
-// export default App;

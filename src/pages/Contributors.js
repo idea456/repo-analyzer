@@ -44,11 +44,9 @@ class Contributors extends React.Component {
         )}
         {!this.props.loading && (
           <div>
-            <CardDeck style={{ width: "100%" }}>
-              <ContributorsTable
-                contributors_data={this.props.contributors_data}
-              />
-            </CardDeck>
+            <ContributorsTable
+              contributors_data={this.props.contributors_data}
+            />
           </div>
         )}
       </div>

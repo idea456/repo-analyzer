@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "react-bootstrap/Image";
+import { connect } from "react-redux";
 
 class Error extends React.Component {
   render() {
@@ -21,13 +22,20 @@ class Error extends React.Component {
         />
         <h2>Oh no! An error occured!</h2>
         <i>
-          {this.props.msg === undefined
+          {this.props.error_msg === ""
             ? "Most likely it is a non existent owner or repository name"
-            : this.props.msg}
+            : this.props.error_msg}
         </i>
       </div>
     );
   }
 }
 
-export default Error;
+const mapStateToProps = state => {
+  return {
+    error: state.global.error,
+    error_msg: state.global.error_msg
+  };
+};
+
+export default connect(mapStateToProps, null)(Error);

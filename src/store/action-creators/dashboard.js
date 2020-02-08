@@ -2,6 +2,7 @@ import { CHANGE_LOADING, SET_DASHBOARD } from "../types/dashboard";
 import ApolloClient, { gql } from "apollo-boost";
 import axios from "axios";
 import { SET_ERROR } from "../types/global";
+import { onError } from "apollo-link-error";
 
 let token = "418c0886216f6be2b8a53154a8a62d984d345d8c1";
 
@@ -23,9 +24,21 @@ export function setDashboard(payload) {
   };
 }
 
+// error handling
+const link = onError(({ graphQLErrors, networkError }) => {
+  console.log("hello");
+  if (graphQLErrors) {
+    console.log("im in here...");
+  }
+  if (networkError) {
+    console.log("im in here...");
+  }
+});
+
 // the apollo client
 const client = new ApolloClient({
   uri: "https://api.github.com/graphql",
+  link,
   request: async operation => {
     operation.setContext({
       headers: {
