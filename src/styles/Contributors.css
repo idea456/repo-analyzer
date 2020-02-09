@@ -1,6 +1,5 @@
 tbody {
   display: block;
-  height: 200px;
   overflow: auto;
 }
 thead,

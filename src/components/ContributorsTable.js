@@ -50,10 +50,20 @@ class ContributorsTable extends React.Component {
                   <th>Deletions</th>
                 </tr>
               </thead>
-              <tbody style={{ height: window.innerHeight * 0.77 }}>
+              <tbody
+                style={{
+                  height: window.innerHeight * 0.77
+                }}
+              >
                 {this.state.contributors_data.map((data, i) => {
                   return (
                     <tr
+                      style={{
+                        display: "table",
+                        width: "100%",
+                        tableLayout: "fixed"
+                      }}
+                      className="sticky-table"
                       key={i}
                       onClick={() => console.log("clicked table ", i)}
                     >

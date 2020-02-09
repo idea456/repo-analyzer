@@ -21,11 +21,7 @@ class Error extends React.Component {
           src={require("../images/robot.gif")}
         />
         <h2>Oh no! An error occured!</h2>
-        <i>
-          {this.props.error_msg === ""
-            ? "Most likely it is a non existent owner or repository name"
-            : this.props.error_msg}
-        </i>
+        <i>{this.props.error_msg}</i>
       </div>
     );
   }

@@ -56,6 +56,9 @@ class CodeFrequency extends React.Component {
                   second_data={this.props.code_deletions}
                   title="Total Code Additions"
                   second_title="Total Code Deletions"
+                  barThickness={4}
+                  titleDisplay={false}
+                  legendDisplay={true}
                   height={window.innerHeight * 0.83}
                 />
               </CardDeck>

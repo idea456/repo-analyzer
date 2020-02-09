@@ -10,8 +10,8 @@ class CardTable extends React.Component {
 
   formatMessage(message) {
     let ret = "";
-    if (message.length >= 35) {
-      ret = message.substring(0, 35) + "...";
+    if (message.length >= 40) {
+      ret = message.substring(0, 40) + "...";
     } else {
       return message;
     }
@@ -32,7 +32,7 @@ class CardTable extends React.Component {
             {this.props.data.map((data, i) => {
               return (
                 <tr key={i}>
-                  <td>
+                  <td style={{ width: 50 }}>
                     <Image
                       style={{ width: 40 }}
                       resizeMode="contain"
@@ -46,7 +46,9 @@ class CardTable extends React.Component {
                       roundedCircle
                     />
                   </td>
-                  <td>{this.formatMessage(data.commit.message)}</td>
+                  <td style={{ width: 350 }}>
+                    {this.formatMessage(data.commit.message)}
+                  </td>
                   <td>
                     <Button
                       variant="info"

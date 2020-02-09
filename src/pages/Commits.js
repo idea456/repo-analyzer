@@ -82,14 +82,15 @@ class Commits extends React.Component {
             </CardDeck>
 
             <CardDeck style={{ width: "100%" }}>
-              <CardTimeLineChart
-                data={this.props.commit_count_all}
-                second_data={this.props.commit_count_owner}
+              <CardBarChart
+                data={this.props.timeline_data}
+                title="Total Commit activity"
                 labels={this.props.timeline_labels}
-                mainTitle="Commit count for all users"
                 titleDisplay={true}
                 legendDisplay={false}
-                height={window.innerHeight * 0.6}
+                mainTitle="Total commit count"
+                barThickness={15}
+                height={300}
                 refreshPage={this.refreshPage}
               />
             </CardDeck>

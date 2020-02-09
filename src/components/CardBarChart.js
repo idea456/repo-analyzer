@@ -10,7 +10,7 @@ class CardBarChart extends React.Component {
       datasets: [
         {
           label: this.props.title,
-          barThickness: 4,
+          barThickness: this.props.barThickness,
           fill: false,
           backgroundColor: "rgba(75,192,192,1)",
           borderColor: "rgba(75,192,192,1)",
@@ -18,7 +18,7 @@ class CardBarChart extends React.Component {
         },
         {
           label: this.props.second_title,
-          barThickness: 4,
+          barThickness: this.props.barThickness,
           fill: false,
           backgroundColor: "rgba(255,99,132,1)",
           borderColor: "rgba(255,99,132,1)",
@@ -36,10 +36,20 @@ class CardBarChart extends React.Component {
             data={this.data}
             options={{
               maintainAspectRatio: false,
+              legend: {
+                display: this.props.legendDisplay
+              },
+              title: {
+                text: this.props.mainTitle,
+                display: this.props.titleDisplay
+              },
               scales: {
                 xAxes: [
                   {
                     type: "time",
+                    time: {
+                      tooltipFormat: "MM/DD/YYYY"
+                    },
                     distribution: "linear"
                   }
                 ]

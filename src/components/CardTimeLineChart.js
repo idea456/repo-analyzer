@@ -47,6 +47,9 @@ class CardTimeLineChart extends React.Component {
                 xAxes: [
                   {
                     type: "time",
+                    time: {
+                      tooltipFormat: "MM/DD/YYYY"
+                    },
                     distribution: "linear"
                   }
                 ]
