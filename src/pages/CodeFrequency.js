@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getCodeFrequencyData } from "../store/action-creators/code_frequency";
 
+import Error from "../pages/Error";
 import CardBarChart from "../components/CardBarChart";
 
 import CardDeck from "react-bootstrap/CardDeck";
@@ -21,55 +22,54 @@ class CodeFrequency extends React.Component {
   }
 
   render() {
-    try {
-      return (
-        <div>
-          {this.props.loading && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                paddingTop: "30px",
-                flexDirection: "column"
-              }}
-            >
-              <Image
-                style={{ width: 300, marginBottom: 20 }}
-                resizeMode="contain"
-                src={require("../images/cat.gif")}
-              />
-              <br />
-              <h3>Loading the data...</h3>
-            </div>
-          )}
-          {!this.props.loading && (
-            <div>
-              {/* <CardDeck style={{ width: "100%" }}>
-                <CodeFrequencyTable
-                  contributors_data={this.props.contributors_data}
+    if (this.props.error) {
+      return <Error />;
+    } else {
+      try {
+        return (
+          <div>
+            {this.props.loading && (
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  paddingTop: "30px",
+                  flexDirection: "column"
+                }}
+              >
+                <Image
+                  style={{ width: 300, marginBottom: 20 }}
+                  resizeMode="contain"
+                  src={require("../images/cat.gif")}
                 />
-              </CardDeck> */}
-              <CardDeck style={{ width: "100%" }}>
-                <CardBarChart
-                  data={this.props.code_additions}
-                  second_data={this.props.code_deletions}
-                  title="Total Code Additions"
-                  second_title="Total Code Deletions"
-                  barThickness={4}
-                  titleDisplay={false}
-                  legendDisplay={true}
-                  height={window.innerHeight * 0.83}
-                />
-              </CardDeck>
-            </div>
-          )}
-        </div>
-      );
-    } catch {
-      // reload the page if the CodeFrequencyTable has not finished loading data yet
-      this.props.history.push("/main");
-      this.props.history.push("/code-frequency");
+                <br />
+                <h3>Loading the data...</h3>
+              </div>
+            )}
+            {!this.props.loading && (
+              <div>
+                <CardDeck style={{ width: "100%" }}>
+                  <CardBarChart
+                    data={this.props.code_additions}
+                    second_data={this.props.code_deletions}
+                    title="Total Code Additions"
+                    second_title="Total Code Deletions"
+                    barThickness={4}
+                    titleDisplay={false}
+                    legendDisplay={true}
+                    height={window.innerHeight * 0.83}
+                  />
+                </CardDeck>
+              </div>
+            )}
+          </div>
+        );
+      } catch {
+        // reload the page if the CodeFrequencyTable has not finished loading data yet
+        this.props.history.push("/main");
+        this.props.history.push("/code-frequency");
+      }
     }
   }
 }

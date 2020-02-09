@@ -1,5 +1,7 @@
 import { CHANGE_LOADING, SET_DASHBOARD } from "../types/dashboard";
 import ApolloClient, { gql } from "apollo-boost";
+import { onError } from "apollo-link-error";
+import { createHttpLink } from "apollo-link-http";
 import axios from "axios";
 import { SET_ERROR } from "../types/global";
 
@@ -36,7 +38,6 @@ const client = new ApolloClient({
 });
 
 export function getDashboardData(owner, name) {
-  console.log(typeof process.env.REACT_APP_GITHUB_TOKEN);
   return async function(dispatch, setState) {
     try {
       const data = gql`
@@ -170,7 +171,21 @@ export function getDashboardData(owner, name) {
                 language_count
               }
             })
-          );
+          )
+          .catch(error => {
+            if (
+              error.message ===
+              `GraphQL error: Could not resolve to a Repository with the name '${name}'.`
+            ) {
+              dispatch({
+                type: SET_ERROR,
+                payload: {
+                  error: true,
+                  msg: "Repository name does not exist with owner!"
+                }
+              });
+            }
+          });
       }
     } catch {
       dispatch({

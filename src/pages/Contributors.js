@@ -2,7 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getContributorsData } from "../store/action-creators/contributors";
+import { setError } from "../store/action-creators/global";
 
+import Error from "../pages/Error";
 import ContributorsTable from "../components/ContributorsTable";
 import Image from "react-bootstrap/Image";
 import CardDeck from "react-bootstrap/CardDeck";
@@ -20,37 +22,40 @@ class Contributors extends React.Component {
   }
 
   render() {
-    console.log(this.props.contributors_data);
-    return (
-      <div>
-        {this.props.loading && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              paddingTop: "30px",
-              flexDirection: "column"
-            }}
-          >
-            <Image
-              style={{ width: 300, marginBottom: 20 }}
-              resizeMode="contain"
-              src={require("../images/cat.gif")}
-            />
-            <br />
-            <h3>Loading the data...</h3>
-          </div>
-        )}
-        {!this.props.loading && (
-          <div>
-            <ContributorsTable
-              contributors_data={this.props.contributors_data}
-            />
-          </div>
-        )}
-      </div>
-    );
+    if (this.props.error) {
+      return <Error />;
+    } else {
+      return (
+        <div>
+          {this.props.loading && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingTop: "30px",
+                flexDirection: "column"
+              }}
+            >
+              <Image
+                style={{ width: 300, marginBottom: 20 }}
+                resizeMode="contain"
+                src={require("../images/cat.gif")}
+              />
+              <br />
+              <h3>Loading the data...</h3>
+            </div>
+          )}
+          {!this.props.loading && (
+            <div>
+              <ContributorsTable
+                contributors_data={this.props.contributors_data}
+              />
+            </div>
+          )}
+        </div>
+      );
+    }
   }
 }
 
@@ -65,6 +70,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    setError: isError => dispatch(setError(isError)),
     getContributorsData: (owner, name) =>
       dispatch(getContributorsData(owner, name))
   };

@@ -4,6 +4,7 @@ import "../styles/Dashboard.css";
 import CardPiece from "../components/CardPiece";
 import CardPieChart from "../components/CardPieChart";
 import CardHorizontalBarChart from "../components/CardHorizontalBarChart";
+import Error from "../pages/Error";
 
 import CardDeck from "react-bootstrap/CardDeck";
 import Spinner from "react-bootstrap/Spinner";
@@ -41,64 +42,68 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    return (
-      <React.Fragment>
-        {this.props.loading && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              paddingTop: "30px",
-              flexDirection: "column"
-            }}
-          >
-            <Image
-              style={{ width: 300, marginBottom: 20 }}
-              resizeMode="contain"
-              src={require("../images/cat.gif")}
-            />
-            <br />
-            <h3>Loading the data...</h3>
-          </div>
-        )}
-        {!this.props.loading && (
-          <div>
-            <CardDeck style={{ width: "100%" }}>
-              <CardPiece title="Commits" text={this.props.commits} />
-              <CardPiece title="Branches" text={this.props.branches} />
-              <CardPiece title="Releases" text={this.props.releases} />
-              <CardPiece title="Forks" text={this.props.forks} />
-            </CardDeck>
+    if (this.props.error) {
+      return <Error />;
+    } else {
+      return (
+        <React.Fragment>
+          {this.props.loading && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingTop: "30px",
+                flexDirection: "column"
+              }}
+            >
+              <Image
+                style={{ width: 300, marginBottom: 20 }}
+                resizeMode="contain"
+                src={require("../images/cat.gif")}
+              />
+              <br />
+              <h3>Loading the data...</h3>
+            </div>
+          )}
+          {!this.props.loading && (
+            <div>
+              <CardDeck style={{ width: "100%" }}>
+                <CardPiece title="Commits" text={this.props.commits} />
+                <CardPiece title="Branches" text={this.props.branches} />
+                <CardPiece title="Releases" text={this.props.releases} />
+                <CardPiece title="Forks" text={this.props.forks} />
+              </CardDeck>
 
-            <CardDeck style={{ width: "100%" }}>
-              <CardPiece
-                title="Pull requests"
-                text={this.props.pull_requests}
-              />
-              <CardPiece title="Watch" text={this.props.watch} />
-              <CardPiece title="Stars" text={this.props.stars} />
-              <CardPiece title="Issues" text={this.props.issues} />
-            </CardDeck>
+              <CardDeck style={{ width: "100%" }}>
+                <CardPiece
+                  title="Pull requests"
+                  text={this.props.pull_requests}
+                />
+                <CardPiece title="Watch" text={this.props.watch} />
+                <CardPiece title="Stars" text={this.props.stars} />
+                <CardPiece title="Issues" text={this.props.issues} />
+              </CardDeck>
 
-            <CardDeck style={{ width: "100%" }}>
-              <CardPieChart
-                data={this.props.popularity_data}
-                labels={this.props.popularity_labels}
-                legend={false}
-                name={this.props.name}
-                title="Popularity by stars compared to other repositories"
-              />
-              <CardHorizontalBarChart
-                title="Language frequency"
-                labels={this.props.language_labels}
-                data={this.props.language_count}
-              />
-            </CardDeck>
-          </div>
-        )}
-      </React.Fragment>
-    );
+              <CardDeck style={{ width: "100%" }}>
+                <CardPieChart
+                  data={this.props.popularity_data}
+                  labels={this.props.popularity_labels}
+                  legend={false}
+                  name={this.props.name}
+                  title="Popularity by stars compared to other repositories"
+                />
+                <CardHorizontalBarChart
+                  title="Language frequency"
+                  labels={this.props.language_labels}
+                  data={this.props.language_count}
+                />
+              </CardDeck>
+            </div>
+          )}
+        </React.Fragment>
+      );
+    }
   }
 }
 

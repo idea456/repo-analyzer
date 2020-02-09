@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
+import Error from "../pages/Error";
 import CardDeck from "react-bootstrap/CardDeck";
 import Spinner from "react-bootstrap/Spinner";
 import Container from "react-bootstrap/Container";
@@ -44,60 +45,64 @@ class Commits extends React.Component {
   }
 
   render() {
-    return (
-      <div>
-        {this.props.loading && (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              paddingTop: "30px",
-              flexDirection: "column"
-            }}
-          >
-            <Image
-              style={{ width: 300 }}
-              resizeMode="contain"
-              src={require("../images/cat.gif")}
-            />
-            <br />
-            <h3>Loading the data...</h3>
-          </div>
-        )}
-        {!this.props.loading && (
-          <Container>
-            <CardDeck style={{ width: "100%" }}>
-              <CardTimeLineChart
-                data={this.props.timeline_data}
-                title="Total Commit activity"
-                labels={this.props.timeline_labels}
-                titleDisplay={true}
-                legendDisplay={false}
-                mainTitle="Weekly commit activity"
-                height={300}
-                refreshPage={this.refreshPage}
+    if (this.props.error) {
+      return <Error />;
+    } else {
+      return (
+        <div>
+          {this.props.loading && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                paddingTop: "30px",
+                flexDirection: "column"
+              }}
+            >
+              <Image
+                style={{ width: 300 }}
+                resizeMode="contain"
+                src={require("../images/cat.gif")}
               />
-              <CardTable data={this.props.commits_data} />
-            </CardDeck>
+              <br />
+              <h3>Loading the data...</h3>
+            </div>
+          )}
+          {!this.props.loading && (
+            <Container>
+              <CardDeck style={{ width: "100%" }}>
+                <CardTimeLineChart
+                  data={this.props.timeline_data}
+                  title="Total Commit activity"
+                  labels={this.props.timeline_labels}
+                  titleDisplay={true}
+                  legendDisplay={false}
+                  mainTitle="Weekly commit activity"
+                  height={300}
+                  refreshPage={this.refreshPage}
+                />
+                <CardTable data={this.props.commits_data} />
+              </CardDeck>
 
-            <CardDeck style={{ width: "100%" }}>
-              <CardBarChart
-                data={this.props.timeline_data}
-                title="Total Commit activity"
-                labels={this.props.timeline_labels}
-                titleDisplay={true}
-                legendDisplay={false}
-                mainTitle="Total commit count"
-                barThickness={15}
-                height={300}
-                refreshPage={this.refreshPage}
-              />
-            </CardDeck>
-          </Container>
-        )}
-      </div>
-    );
+              <CardDeck style={{ width: "100%" }}>
+                <CardBarChart
+                  data={this.props.timeline_data}
+                  title="Total Commit activity"
+                  labels={this.props.timeline_labels}
+                  titleDisplay={true}
+                  legendDisplay={false}
+                  mainTitle="Total commit count"
+                  barThickness={15}
+                  height={300}
+                  refreshPage={this.refreshPage}
+                />
+              </CardDeck>
+            </Container>
+          )}
+        </div>
+      );
+    }
   }
 }
 
