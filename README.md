@@ -6,7 +6,7 @@ Repo analyzer is a simple and fun website , made with React, to display stats ab
 Check it out here : https://repo-analyzer.herokuapp.com/
 
 # Issues
-If the webpage loads an application error, just click reload to load the website
+If the webpage loads an application error, just click reload to load the website.
 
 # Installation
 
